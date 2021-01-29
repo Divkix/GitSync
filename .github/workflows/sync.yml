@@ -1,0 +1,32 @@
+name: Sync Git Repos
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # every 6 hours
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+
+    - name: Checkout current repository
+      uses: actions/checkout@v2
+
+    - name: Initialising
+      env:
+           GitHubAccessToken: ${{ secrets.GitHubAccessToken }}
+           GitLabAccessToken: ${{ secrets.GitLabAccessToken }}
+      run: |
+           sudo apt update
+           sudo apt install git-core -y
+           git config --global user.name "Divkix"
+           git config --global user.email "techdroidroot@gmail.com"
+           sudo pip install --upgrade pygithub python-gitlab
+           echo '{"GitHubAccessToken": "'"$GitHubAccessToken"'", "GitLabAccessToken": "'"$GitLabAccessToken"'"}' > config.json
+
+    - name: Sync Process
+      run: python3 gitpush.py
