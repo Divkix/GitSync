@@ -2,7 +2,7 @@ name: Sync Git Repos
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # every 6 hours
+    - cron: '0 0 * * *'  # once a day
 
 defaults:
   run:
@@ -21,11 +21,7 @@ jobs:
            GitHubAccessToken: ${{ secrets.GitHubAccessToken }}
            GitLabAccessToken: ${{ secrets.GitLabAccessToken }}
       run: |
-           sudo apt update
-           sudo apt install git-core -y
-           git config --global user.name "Divkix"
-           git config --global user.email "techdroidroot@gmail.com"
-           sudo pip install --upgrade pygithub python-gitlab
+           bash scripts/setup.sh
            echo '{"GitHubAccessToken": "'"$GitHubAccessToken"'", "GitLabAccessToken": "'"$GitLabAccessToken"'"}' > config.json
 
     - name: Sync Process

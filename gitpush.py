@@ -1,4 +1,3 @@
-import os
 import re
 import json
 import subprocess
@@ -48,14 +47,14 @@ def check_gitlab_project(folderName):
 
 # clone repo with --mirror option
 def clone_repo(repo):
-    subprocess.call(["sh", "./scripts/clone.sh", repo[0], repo[1]])
+    subprocess.call(["bash", "./scripts/clone.sh", repo[0], repo[1]])
 
 
 # push repo to remote
 def push_repo(repo):
     gitlab_url = f"https://oauth2:{GLAccessToken}@gitlab.com/{me.name}/" + repo[0]
     check_gitlab_project(repo[0])
-    subprocess.call(["sh", "./scripts/push.sh", repo[0], gitlab_url])
+    subprocess.call(["bash", "./scripts/push.sh", repo[0], gitlab_url])
     subprocess.call(["rm", "-rf", repo[0]])  # remove local folder
 
 
