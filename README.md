@@ -1,5 +1,7 @@
 # GitSync
 
+![Sync Git Repos](https://github.com/Divkix/GitSync/workflows/Sync%20Git%20Repos/badge.svg)
+
 A simple github action to sync all you public github repositories to gitlab!
 
 ### Currently Supports:
